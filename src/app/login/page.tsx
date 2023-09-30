@@ -23,10 +23,10 @@ const router = useRouter();
     const onSubmit:SubmitHandler<FormValues> = async(data:any) =>{
         try{
             const res = await userLogin({...data}).unwrap();
-            if(res?.data?.accessToken){
+            if(res?.accessToken){
               router.push("/profile");
             }
-            storeUserInfo({accessToken: res?.data?.accessToken});
+            storeUserInfo({accessToken: res?.accessToken});
             console.log(res);
         }catch(err:any){
           console.log(err.message);
