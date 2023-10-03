@@ -1,3 +1,5 @@
+"use client";
+
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadcrumb from "@/components/ui/UMBreadcrumb";
 import { getUserInfo } from "@/services/auth.service";
@@ -19,9 +21,9 @@ const ResetPasswordPage = () => {
             ]}
              />           
 
-            <ActionBar title="Admin List">
+            <ActionBar title="Change Password">
             <Link href="/super_admin/change-password/create">
-            <Button type="primary">Create Admin</Button>
+            <Button type="primary">Create Password</Button>
             </Link>
             </ActionBar>
         </div>
