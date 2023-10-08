@@ -1,6 +1,7 @@
 "use client";
 
 import UMBreadcrumb from "@/components/ui/UMBreadcrumb";
+import UMTable from "@/components/ui/UMTable";
 import { Button } from "antd";
 import Link from "next/link";
 
@@ -20,6 +21,8 @@ const DepartmentPage = () => {
         <Link href="/super_admin/department/create">
             <Button type="primary">Create</Button>
         </Link>
+
+        <UMTable />
         </div>
     );
 };

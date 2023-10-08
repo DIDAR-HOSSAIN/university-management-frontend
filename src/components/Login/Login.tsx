@@ -1,5 +1,5 @@
 "use client";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row, message } from "antd";
 import loginImage from "./../../assets/login-image.png"
 import Image from "next/image";
 import Form from "@/components/Forms/Form";
@@ -25,6 +25,7 @@ const router = useRouter();
             const res = await userLogin({...data}).unwrap();
             if(res?.accessToken){
               router.push("/profile");
+              message.success("User logged in successfully");
             }
             storeUserInfo({accessToken: res?.accessToken});
             console.log(res);
