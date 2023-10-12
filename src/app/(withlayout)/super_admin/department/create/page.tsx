@@ -21,6 +21,7 @@ const CreateDepartmentPage = () => {
       message.error(err.message);
     }
   };
+  
   const base = "super_admin";
   return (
     <div>

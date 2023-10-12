@@ -2,11 +2,11 @@
 
 import UMBreadcrumb from "@/components/ui/UMBreadcrumb";
 import UMTable from "@/components/ui/UMTable";
-import {useDepartmentsQuery} from "@/redux/api/departmentApi";
-import {Button} from "antd";
+import {useDeleteDepartmentMutation, useDepartmentsQuery} from "@/redux/api/departmentApi";
+import {Button, message} from "antd";
 import Link from "next/link";
 import {useState} from "react";
-import {EyeOutlined, EditOutlined, DeleteOutlined, ReloadOutlined} from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, ReloadOutlined} from "@ant-design/icons";
 import ActionBar from "@/components/ui/ActionBar";
 import { useDebounced } from "@/redux/hooks";
 import dayjs from "dayjs";
@@ -23,6 +23,8 @@ const DepartmentPage = () => {
     const [sortBy, setSortBy] = useState < string > ("");
     const [sortOrder, setSortOrder] = useState < string > ("");
     const [searchTerm, setSearchTerm] = useState < string > ("");
+
+    const [deleteDepartment] = useDeleteDepartmentMutation();
 
     query["limit"] = size;
     query["page"] = page;
@@ -44,6 +46,18 @@ const debouncedTerm = useDebounced({
     const departments = data ?. departments;
     const meta = data ?. meta;
 
+    const deleteHandler = async (id: string) => {
+    message.loading("Deleting...");
+    try {
+      await deleteDepartment(id)
+      console.log(data);
+      message.success("Department deleted successfully")
+    } catch (err: any) {
+      console.error(err.message);
+      message.error(err.message);
+    }
+  };
+
     const columns = [
         {
             title: 'Title',
@@ -62,27 +76,22 @@ const debouncedTerm = useDebounced({
             render: function (data : any) {
                 return (
                     <>
-                        <Button onClick={
-                                () => console.log(data)
-                            }
-                            type="primary">
-                            <EyeOutlined/>
-                        </Button>
-
+                    <Link href={`/super_admin/department/edit/${data?.id}`}>
                         <Button style={
-                                {
-                                    margin: "0px 5px"
-                                }
+                            {
+                                margin: "0px 5px"
                             }
-                            onClick={
-                                () => console.log(data)
-                            }
-                            type="primary">
-                            <EditOutlined/>
-                        </Button>
+                        }
+                        onClick={
+                            () => console.log(data)
+                        }
+                        type="primary">
+                        <EditOutlined/>
+                    </Button>
+                    </Link>
 
                         <Button onClick={
-                                () => console.log(data)
+                                () => deleteHandler(data?.id)
                             }
                             type="primary"
                             danger>
